@@ -1,0 +1,15 @@
+html {margin:0 auto; background:#ccccff; height:100%; width: 100%; background-image: url("../img/background.jpg"); background-size: 20%;}
+body {margin:0 auto; background:#ccccff; height:100%; width: 100%; background-image: url("../img/background.jpg"); background-size: 20%;}
+
+.barrasuperior {width: 100%; height: auto; padding: 1px; margin: 0 auto; margin-bottom: 3%; text-align: center; background:#000033; box-shadow:0 0 30px #4d4dff; font-size: 150%;}
+.content {width: 800px; height: auto; padding:1% 1% 5% 1%;; margin: 0 auto; text-align: center; background:#000033; box-shadow:0 0 30px #4d4dff; font-size: 120%; border-radius: 15px;}
+#selecao {box-shadow:0 0 15px #4d4dff; width: 580px; margin: 0 auto;}
+#formulario {width: 100%; font-size: 100%; display: none; background :#ccccff; box-shadow:0 0 15px #4d4dff; border-radius: 10px;}
+#botoes {color: white; font-size: 120%; display: inline;}
+
+select {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6; font-size: 100%; font-weight: bold;}
+table {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6; border-top: none;}
+h1{color: #ccccff; text-shadow: 0 0 20px #4d4dff;}
+th,tr {width: 120px;}
+button {width: auto; margin: 0 auto; background: #ccccff; font-size: 90%; border-radius: 5px;}
+input {width: auto; margin: 1%; background: #ccccff;font-size: 80%; border-radius: 5px;}

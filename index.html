@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<title> CRUD </title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="js/jquery-1.12.3.js"></script>
+		<script src="js/script.js"></script>
+	</head>
+	<body>
+		<div class="barrasuperior">
+			<h1> Atacado de frutas </h1>
+		</div>
+		<div class="content">
+			<h1> Consulte os produtos em estoque:</h1>
+			<div id="selecao">
+				<select id="produtos" onchange="buscarproduto()"></select>	
+				<div id="resultado"></div>
+			</div>
+			<br>
+			
+			<form id="botoes">
+				<input onclick="editarproduto()" type="submit" formmethod="post" value="Editar produto">
+				<input onclick="excluirproduto()" type="submit" formmethod="post" value="Excluir produto">
+				<input onclick="abrirformulario()" type="button" value="Incluir produto">
+			</form>
+
+			<div class="formulario">
+				<form id="formulario">
+					Produto: 
+	  				<input id="nome" type="text" name="nome" value="ex: morango"><br>
+	  				Valor: 
+	  				<input id="valor" type="text" name="valor" value="ex: 2,50"><br>
+	  				Estoque: 
+	  				<input id="estoque" type="text" name="estoque" value="ex: 100"><br>
+	  				Status: 
+	  				<input type="radio" name="status" value="A"> Ativo
+	  				<input type="radio" name="status" value="I"> Inativo<br>
+	  				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
+				</form>
+			</div>
+			<div id="div1"></div>
+		</div>
+	</body>
+</html>
