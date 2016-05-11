@@ -3,10 +3,10 @@ var endereco='http://localhost:3000';
 $(document).ready(function(){
 	$.getJSON(endereco + '/product', function(data){
 		var list='<option value="#"> Selecione uma opção. </option>';
+		list+='<option value="@"> exibir todos produtos </option>';
 		for (var x=0; x<data.length;x++){
 			list+='<option value='+data[x].id+'>' + data[x].nome + '</option>';
 		}
-		list+='<option value="@"> exibir todos produtos </option>';
 		$('#produtos').html(list);
 	});
 });
@@ -24,17 +24,31 @@ function abrirformulario (){
 }
 
 function incluirproduto (){
-	var i='';
-	var n=$('#nome').val();
-	var v=$('#valor').val();
-	var e=$('#estoque').val();
-	var s=$('input[name=status]:checked', '#formulario').val();
 	$.ajax({
-		url:endereco + '/product'+ i, 
+		url:endereco + '/product', 
 		type: 'POST',
-		data: {nome:n, valor:v, status:s, estoque:e}
+		data: {
+			nome:$('#nome').val(), 
+			valor:$('#valor').val(),
+			status:$('input[name=status]:checked', '#formulario').val(),
+			estoque:$('#estoque').val()
+		}
 	});
-	i=$('#produtos').val();
+}
+
+function editarproduto (data){
+	$("#formulario").toggle();
+	var i=$('#produtos').val();
+	$.ajax({
+		url:endereco + '/product/'+i, 
+		type: 'PUT',
+		data: {
+			nome:$('#nome').val(), 
+			valor:$('#valor').val(),
+			status:$('input[name=status]:checked', '#formulario').val(),
+			estoque:$('#estoque').val()
+		}
+	});
 }
 
 function buscarproduto(){

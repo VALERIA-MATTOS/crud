@@ -21,26 +21,36 @@
 			<br>
 			
 			<form id="botoes">
-				<input onclick="editarproduto()" type="submit" formmethod="post" value="Editar produto">
+				<input onclick="editarproduto()" type="button" value="Editar produto">
 				<input onclick="excluirproduto()" type="submit" formmethod="post" value="Excluir produto">
 				<input onclick="abrirformulario()" type="button" value="Incluir produto">
 			</form>
 
-			<div class="formulario">
-				<form id="formulario">
-					Produto: 
-	  				<input id="nome" type="text" name="nome" value="ex: morango"><br>
-	  				Valor: 
-	  				<input id="valor" type="text" name="valor" value="ex: 2,50"><br>
-	  				Estoque: 
-	  				<input id="estoque" type="text" name="estoque" value="ex: 100"><br>
-	  				Status: 
-	  				<input type="radio" name="status" value="A"> Ativo
-	  				<input type="radio" name="status" value="I"> Inativo<br>
-	  				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
-				</form>
-			</div>
-			<div id="div1"></div>
+			<form id="formulario">
+				Produto: 
+  				<input id="nome" type="text" name="nome" value="ex: morango"><br>
+  				Valor: 
+  				<input id="valor" type="text" name="valor" value="ex: 2,50"><br>
+  				Estoque: 
+  				<input id="estoque" type="text" name="estoque" value="ex: 100"><br>
+  				Status: 
+  				<input type="radio" name="status" value="A"> Ativo
+  				<input type="radio" name="status" value="I"> Inativo<br>
+  				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
+			</form>
+
+			<form id="formulario">
+				Produto: 
+  				<input id="nome" type="text" name="nome" value="ex: morango"><br>
+  				Valor: 
+  				<input id="valor" type="text" name="valor" value="ex: 2.50"><br>
+  				Estoque: 
+  				<input id="estoque" type="text" name="estoque" value="ex: 100"><br>
+  				Status: 
+  				<input type="radio" name="status" value="A"> Ativo
+  				<input type="radio" name="status" value="I"> Inativo<br>
+  				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
+			</form>
 		</div>
 	</body>
 </html>
