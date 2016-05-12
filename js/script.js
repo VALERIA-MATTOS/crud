@@ -28,6 +28,7 @@ function incluirproduto (){
 		url:endereco + '/product', 
 		type: 'POST',
 		data: {
+			id:$('#codigo').val(),
 			nome:$('#nome').val(), 
 			valor:$('#valor').val(),
 			status:$('input[name=status]:checked', '#formulario').val(),
@@ -37,12 +38,12 @@ function incluirproduto (){
 }
 
 function editarproduto (data){
-	$("#formulario").toggle();
-	var i=$('#produtos').val();
 	$.ajax({
 		url:endereco + '/product/'+i, 
-		type: 'PUT',
+		type: 'POST',
+		method: 'PUT',
 		data: {
+			id:$('#codigo').val(),
 			nome:$('#nome').val(), 
 			valor:$('#valor').val(),
 			status:$('input[name=status]:checked', '#formulario').val(),
