@@ -81,3 +81,11 @@ function editarproduto (){
 		}
 	});
 }
+
+function excluirproduto (){
+	var i=$('#produtos').val();
+	$.ajax({
+		url:endereco + '/product/' + i, 
+		type: 'DELETE'
+	});
+}
