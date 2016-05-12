@@ -65,15 +65,15 @@ function atualizarformulario (){
 		$('#codigo').html(list);
 	});
 	$("#formEditar").toggle();
+	$("#formIncluir").hide();
 }
 
 function editarproduto (){
-	var i=$('#nome').val();
+	var i=$('#codigo').val();
 	$.ajax({
 		url:endereco + '/product/' + i, 
 		type: 'PUT',
 		data: {
-			id:$('#codigo').val(),
 			nome:$('#nome').val(),
 			valor:$('#valor').val(),
 			status:$('input[name=status]:checked', '#formEditar').val(),
@@ -87,5 +87,23 @@ function excluirproduto (){
 	$.ajax({
 		url:endereco + '/product/' + i, 
 		type: 'DELETE'
+	});
+}
+
+function abrirformulario (){
+	$("#formIncluir").toggle();
+	$("#formEditar").hide();
+}
+
+function incluirproduto (){
+	$.ajax({
+		url:endereco + '/product/', 
+		type: 'POST',
+		data: {
+			nome:$('#nome2').val(), 
+			valor:$('#valor2').val(),
+			status:$('input[name=status]:checked', '#formIncluir').val(),
+			estoque:$('#estoque2').val()
+		}
 	});
 }
