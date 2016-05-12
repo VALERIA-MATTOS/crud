@@ -3,6 +3,7 @@
 	<head>
 		<title> CRUD </title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link href="img/icone.png" rel="icon" type="image/png">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script src="js/jquery-1.12.3.js"></script>
@@ -15,26 +16,25 @@
 		<div class="content">
 			<h1> Consulte os produtos em estoque:</h1>
 			<div id="selecao">
-				<select id="produtos" onchange="buscarproduto()"></select>	
+				<select id="produtos" onchange="buscarproduto()"></select>
 				<div id="resultado"></div>
 			</div>
 			<br>
 			
 			<form id="botoes">
-				<input onclick="atualizarformulario()" type="button" value="Editar produto">
+				<input id="editar" onclick="atualizarformulario()" type="button" value="Editar produto">
 				<input onclick="excluirproduto()" type="submit" formmethod="post" value="Excluir produto">
 				<input onclick="abrirformulario()" type="button" value="Incluir produto">
 			</form>
 			
 			<form id="formEditar">
-				Código: <select id="codigo" onchange="exibirnomes()"></select><br>
   				Produto: <input id="nome" type="text" name="nome" value=""><br>
   				Valor: <input id="valor" type="text" name="valor" value=""><br>
   				Estoque: <input id="estoque" type="text" name="estoque" value=""><br>
   				Status: 
   				<input type="radio" name="status" value="A"> Ativo
   				<input type="radio" name="status" value="I"> Inativo<br>
-  				<input onclick="editarproduto()" type="submit" formmethod="post" value="Registrar">
+  				<input id="submit" onclick="editarproduto()" type="submit" formmethod="post" value="Registrar">
   				<input type="reset" value="Limpar formulário">
 			</form>
 			

@@ -57,19 +57,12 @@ function todosprodutos (i){
 }
 
 function atualizarformulario (){
-	$.getJSON(endereco + '/product/', function(data){
-		var list='<option value="#"> Selecione uma opção. </option>';
-		for (var x=0; x<data.length;x++){
-			list+='<option value='+data[x].id+'>' + data[x].id + ' - ' + data[x].nome + '</option>';
-		}
-		$('#codigo').html(list);
-	});
 	$("#formEditar").toggle();
 	$("#formIncluir").hide();
 }
 
 function editarproduto (){
-	var i=$('#codigo').val();
+	var i=$('#produtos').val();
 	$.ajax({
 		url:endereco + '/product/' + i, 
 		type: 'PUT',
@@ -82,7 +75,7 @@ function editarproduto (){
 	});
 }
 
-function excluirproduto (){
+function excluirproduto(){
 	var i=$('#produtos').val();
 	$.ajax({
 		url:endereco + '/product/' + i, 
