@@ -21,14 +21,28 @@
 			<br>
 			
 			<form id="botoes">
-				<input onclick="abrirformulario()" type="button" value="Editar produto">
+				<input onclick="atualizarformulario()" type="button" value="Editar produto">
 				<input onclick="excluirproduto()" type="submit" formmethod="post" value="Excluir produto">
-				<input onclick="atualizarformulario()" type="button" value="Incluir produto">
+				<input onclick="abrirformulario()" type="button" value="Incluir produto">
 			</form>
-
-			<form id="formulario">
+			
+			<form id="formEditar">
 				Código:
-				<input id="codigo" type="text" name="codigo" value="ex: 100"><br>
+  				<select id="codigo" onchange="exibirnomes()"></select><br>
+  				Produto:
+  				<input id="nome" type="text" name="nome" value=""><br>
+  				Valor: 
+  				<input id="valor" type="text" name="valor" value=""><br>
+  				Estoque: 
+  				<input id="estoque" type="text" name="estoque" value=""><br>
+  				Status: 
+  				<input type="radio" name="status" value="A"> Ativo
+  				<input type="radio" name="status" value="I"> Inativo<br>
+  				<input onclick="editarproduto()" type="submit" formmethod="post" value="Registrar">
+  				<input type="reset" value="Limpar formulário">
+			</form>
+			
+			<form id="formIncluir">
 				Produto:
   				<input id="nome" type="text" name="nome" value="ex: morango"><br>
   				Valor: 
@@ -39,19 +53,7 @@
   				<input type="radio" name="status" value="A"> Ativo
   				<input type="radio" name="status" value="I"> Inativo<br>
   				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
-			</form>
-
-			<form id="formulario">
-				Produto: 
-  				<input id="nome" type="text" name="nome" value="ex: morango"><br>
-  				Valor: 
-  				<input id="valor" type="text" name="valor" value="ex: 2.50"><br>
-  				Estoque: 
-  				<input id="estoque" type="text" name="estoque" value="ex: 100"><br>
-  				Status: 
-  				<input type="radio" name="status" value="A"> Ativo
-  				<input type="radio" name="status" value="I"> Inativo<br>
-  				<input onclick="editarproduto()" type="submit" formmethod="post" value="Registrar">
+  				<input type="reset" value="Limpar formulário">
 			</form>
 		</div>
 	</body>
