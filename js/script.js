@@ -57,12 +57,14 @@ function todosprodutos (i){
 }
 
 function atualizarformulario (){
-	$("#formEditar").toggle();
-	$("#formIncluir").hide();
+	var i=$('#produtos').val();
+	if (i>=0){
+		$("#formEditar").toggle();
+		$("#formIncluir").hide();
+	}
 }
 
-function editarproduto (){
-	var i=$('#produtos').val();
+function editarproduto (i){
 	$.ajax({
 		url:endereco + '/product/' + i, 
 		type: 'PUT',
