@@ -1,10 +1,23 @@
-var endereco='http://localhost:3000/product/';
+//Correções:
+//Select não exibe opção para listar tudo;
+//
+//
+//
+//
+//
+
+var strings= {endereco:'http://localhost:3000/product/', mensagemErroId:'Não foi possível selecionar o produto.'};
 
 $(document).ready(function(){
-	listar();
+	/*listar();
 	$("#produtos").change(function(){
         buscarproduto();
+    });*/
+
+    $('#pesquisarId').click(function(){
+    	listarPorId();
     });
+
 	$("#editar").click(function(){
         atualizarformulario();
     });
@@ -33,9 +46,8 @@ function esconderbotoes(){
 }
 
 function listar (){
-	$.getJSON(endereco, function(data){
+	$.getJSON(strings.endereco, function(data){
 		var list='<option value="#"> Selecione uma opção. </option>';
-		list+='<option value="@"> exibir todos produtos </option>';
 		for (var x=0; x<data.length;x++){
 			list+='<option value='+data[x].id+'>' + data[x].nome + '</option>';
 		}
@@ -43,10 +55,26 @@ function listar (){
 	});
 }
 
-function buscarproduto(){
-	var i=$('#produtos').val();
-	if (i>=0){
-		$.getJSON(endereco + i, function(data){
+function listarPorId(){
+	var id = $('#campoId').val();
+	var num = isNaN(id);
+	if(id!=='' && num===false){
+		buscarproduto(id);
+	}else{
+		mensagemErroId();
+	}
+}
+
+function mensagemErroId(){
+	$('#resultado').html(strings.mensagemErroId);
+}
+
+function buscarproduto(id){
+	var i = id;
+	console.log(i);
+	//var i=$('#produtos').val();
+	//if (i>=0){
+		$.getJSON(strings.endereco + i, function(data){
 			var result='';
 			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
 			result+='<tr><td>' + data.id + '</td>' ;
@@ -56,13 +84,14 @@ function buscarproduto(){
 			result+='<td>' + data.estoque + '</td></tr></table>';
 			$('#resultado').html(result);
 		});
-		exibirbotoes();
+	/*	exibirbotoes();
 	}
 
 	else {
 		limpar(i);
 		todosprodutos(i);
 	}
+	*/
 }
 
 function limpar(i){

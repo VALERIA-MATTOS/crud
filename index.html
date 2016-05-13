@@ -15,17 +15,23 @@
 		</div>
 		<div class="content">
 			<h1> Consulte os produtos em estoque:</h1>
+			<!--
 			<div id="selecao">
 				<select id="produtos"></select>
-				<div id="resultado"></div>
+				
 			</div>
-			<br>
-			
+			-->
 			<form id="botoes">
 				<input id="editar" type="button" value="Editar produto">
 				<input id="excluir" type="submit" formmethod="post" value="Excluir produto">
 				<input id="abrir" type="button" value="Incluir produto">
+				<input id="todosOsProdutos" type="button" value="Listar todos">
 			</form>
+			<div>
+				<input type="text" id="campoId" placeholder="Digite o código do produto..." />
+				<input type="button" id="pesquisarId" value="Pesquisar"/>
+			</div>
+			<br>
 			
 			<form id="formulario">
   				Produto: <input id="nome" type="text" name="nome" placeholder="ex: morango"><br>
@@ -38,6 +44,8 @@
   				<input id="submit2" type="submit" formmethod="post" value="Registrar">
   				<input type="reset" value="Limpar formulário">
 			</form>
+
+			<div id="resultado"></div>
 		</div>
 	</body>
 </html>
