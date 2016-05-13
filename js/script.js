@@ -1,7 +1,7 @@
 //Correções:
 //Select não exibe opção para listar tudo;
-//
-//
+//Pesquisa por ID
+//Botão para listar tudo
 //
 //
 //
@@ -16,6 +16,10 @@ $(document).ready(function(){
 
     $('#pesquisarId').click(function(){
     	listarPorId();
+    });
+
+    $('#todosOsProdutos').click(function(){
+    	todosprodutos();
     });
 
 	$("#editar").click(function(){
@@ -83,8 +87,9 @@ function buscarproduto(id){
 			result+='<td>' + data.status + '</td>';
 			result+='<td>' + data.estoque + '</td></tr></table>';
 			$('#resultado').html(result);
+			exibirbotoes();
 		});
-	/*	exibirbotoes();
+	/*	
 	}
 
 	else {
@@ -101,9 +106,9 @@ function limpar(i){
 	}
 }
 
-function todosprodutos (i){
-	if (i==="@"){
-		$.getJSON(endereco, function(data){
+function todosprodutos (){
+	//if (i==="@"){
+		$.getJSON(strings.endereco, function(data){
 			var result='';
 			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
 			for (var n=0; n<data.length; n++){
@@ -117,7 +122,7 @@ function todosprodutos (i){
 			$('#resultado').html(result);
 		});
 		esconderbotoes();
-	}
+	//}
 }
 
 function atualizarformulario (){
