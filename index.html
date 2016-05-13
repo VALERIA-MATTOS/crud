@@ -16,15 +16,15 @@
 		<div class="content">
 			<h1> Consulte os produtos em estoque:</h1>
 			<div id="selecao">
-				<select id="produtos" onchange="buscarproduto()"></select>
+				<select id="produtos"></select>
 				<div id="resultado"></div>
 			</div>
 			<br>
 			
 			<form id="botoes">
-				<input id="editar" onclick="atualizarformulario()" type="button" value="Editar produto">
-				<input onclick="excluirproduto()" type="submit" formmethod="post" value="Excluir produto">
-				<input onclick="abrirformulario()" type="button" value="Incluir produto">
+				<input id="editar" type="button" value="Editar produto">
+				<input id="excluir" type="submit" formmethod="post" value="Excluir produto">
+				<input id="abrir" type="button" value="Incluir produto">
 			</form>
 			
 			<form id="formEditar">
@@ -32,19 +32,19 @@
   				Valor: <input id="valor" type="text" name="valor" value=""><br>
   				Estoque: <input id="estoque" type="text" name="estoque" value=""><br>
   				Status: 
-  				<input type="radio" name="status" value="A"> Ativo
+  				<input type="radio" name="status" value="A" checked> Ativo
   				<input type="radio" name="status" value="I"> Inativo<br>
-  				<input id="submit" onclick="editarproduto()" type="submit" formmethod="post" value="Registrar">
+  				<input id="submit" type="submit" formmethod="post" value="Registrar">
   				<input type="reset" value="Limpar formulário">
 			</form>
 			
 			<form id="formIncluir">
-				Produto: <input id="nome2" type="text" name="nome" value="ex: morango"><br>
-  				Valor: <input id="valor2" type="text" name="valor" value="ex: 2,50"><br>
-  				Estoque: <input id="estoque2" type="text" name="estoque" value="ex: 100"><br>
-  				Status: <input type="radio" name="status" value="A"> Ativo
+				Produto: <input id="nome2" type="text" name="nome" placeholder="ex: morango"><br>
+  				Valor: <input id="valor2" type="text" name="valor"placeholder="ex: 2,50"><br>
+  				Estoque: <input id="estoque2" type="text" name="estoque" placeholder="ex: 100"><br>
+  				Status: <input type="radio" name="status" value="A" checked> Ativo
   				<input type="radio" name="status" value="I"> Inativo<br>
-  				<input onclick="incluirproduto()" type="submit" formmethod="post" value="Registrar">
+  				<input id="submit2" type="submit" placeholder="post" value="Registrar">
   				<input type="reset" value="Limpar formulário">
 			</form>
 		</div>

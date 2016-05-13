@@ -1,6 +1,28 @@
 var endereco='http://localhost:3000/product/';
 
 $(document).ready(function(){
+	listar();
+	$("#produtos").change(function(){
+        buscarproduto();
+    });
+	$("#editar").click(function(){
+        atualizarformulario();
+    });
+    $("#submit").click(function(){
+        editarproduto();
+    });
+	$("#excluir").click(function(){
+        excluirproduto();
+    });
+    $("#abrir").click(function(){
+        abrirformulario();
+    });
+	$("#submit2").click(function(){
+        incluirproduto();
+    });  
+});
+
+function listar (){
 	$.getJSON(endereco, function(data){
 		var list='<option value="#"> Selecione uma opção. </option>';
 		list+='<option value="@"> exibir todos produtos </option>';
@@ -9,7 +31,7 @@ $(document).ready(function(){
 		}
 		$('#produtos').html(list);
 	});
-});
+}
 
 function buscarproduto(){
 	var i=$('#produtos').val();
