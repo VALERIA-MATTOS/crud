@@ -1,7 +1,7 @@
-var endereco='http://localhost:3000';
+var endereco='http://localhost:3000/product/';
 
 $(document).ready(function(){
-	$.getJSON(endereco + '/product', function(data){
+	$.getJSON(endereco, function(data){
 		var list='<option value="#"> Selecione uma opção. </option>';
 		list+='<option value="@"> exibir todos produtos </option>';
 		for (var x=0; x<data.length;x++){
@@ -14,7 +14,7 @@ $(document).ready(function(){
 function buscarproduto(){
 	var i=$('#produtos').val();
 	if (i>=0){
-		$.getJSON(endereco + '/product/'+ i, function(data){
+		$.getJSON(endereco + i, function(data){
 			var result='';
 			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
 			result+='<tr><td>' + data.id + '</td>' ;
@@ -40,7 +40,7 @@ function limpar(i){
 
 function todosprodutos (i){
 	if (i==="@"){
-		$.getJSON(endereco + '/product', function(data){
+		$.getJSON(endereco, function(data){
 			var result='';
 			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
 			for (var n=0; n<data.length; n++){
@@ -64,9 +64,10 @@ function atualizarformulario (){
 	}
 }
 
-function editarproduto (i){
+function editarproduto (){
+	var i=$('#produtos').val();
 	$.ajax({
-		url:endereco + '/product/' + i, 
+		url:endereco + i, 
 		type: 'PUT',
 		data: {
 			nome:$('#nome').val(),
@@ -80,7 +81,7 @@ function editarproduto (i){
 function excluirproduto(){
 	var i=$('#produtos').val();
 	$.ajax({
-		url:endereco + '/product/' + i, 
+		url:endereco + i, 
 		type: 'DELETE'
 	});
 }
@@ -92,7 +93,7 @@ function abrirformulario (){
 
 function incluirproduto (){
 	$.ajax({
-		url:endereco + '/product/', 
+		url:endereco, 
 		type: 'POST',
 		data: {
 			nome:$('#nome2').val(), 
