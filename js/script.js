@@ -92,11 +92,9 @@ function todosprodutos (i){
 }
 
 function atualizarformulario (){
-	var i=$('#produtos').val();
-	if (i>=0){
-		$("#formEditar").toggle();
-		$("#formIncluir").hide();
-	}
+	$('#formulario').toggle();
+	$('#abrir').hide();
+	$("#submit2").hide();
 }
 
 function editarproduto (){
@@ -107,7 +105,7 @@ function editarproduto (){
 		data: {
 			nome:$('#nome').val(),
 			valor:$('#valor').val(),
-			status:$('input[name=status]:checked', '#formEditar').val(),
+			status:$('input[name=status]:checked', '#formulario').val(),
 			estoque:$('#estoque').val()
 		}
 	});
@@ -122,8 +120,8 @@ function excluirproduto(){
 }
 
 function abrirformulario (){
-	$("#formIncluir").toggle();
-	$("#formEditar").hide();
+	$("#formulario").toggle();
+	$("#submit").hide();
 }
 
 function incluirproduto (){
@@ -131,10 +129,10 @@ function incluirproduto (){
 		url:endereco, 
 		type: 'POST',
 		data: {
-			nome:$('#nome2').val(), 
-			valor:$('#valor2').val(),
-			status:$('input[name=status]:checked', '#formIncluir').val(),
-			estoque:$('#estoque2').val()
+			nome:$('#nome').val(), 
+			valor:$('#valor').val(),
+			status:$('input[name=status]:checked', '#formulario').val(),
+			estoque:$('#estoque').val()
 		}
 	});
 }
