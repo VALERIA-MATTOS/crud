@@ -22,6 +22,16 @@ $(document).ready(function(){
     });  
 });
 
+function exibirbotoes(){
+	$('#editar').show();
+	$('#excluir').show();
+}
+
+function esconderbotoes(){
+	$('#editar').hide();
+	$('#excluir').hide();
+}
+
 function listar (){
 	$.getJSON(endereco, function(data){
 		var list='<option value="#"> Selecione uma opção. </option>';
@@ -46,6 +56,7 @@ function buscarproduto(){
 			result+='<td>' + data.estoque + '</td></tr></table>';
 			$('#resultado').html(result);
 		});
+		exibirbotoes();
 	}
 
 	else {
@@ -57,6 +68,7 @@ function buscarproduto(){
 function limpar(i){
 	if (i==="#"){
 		$('#resultado').html('');
+		esconderbotoes();
 	}
 }
 
@@ -75,6 +87,7 @@ function todosprodutos (i){
 			'</table>';
 			$('#resultado').html(result);
 		});
+		esconderbotoes();
 	}
 }
 
