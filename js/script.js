@@ -16,97 +16,51 @@ $(document).ready(function(){
 
     $('#pesquisarId').click(function(){
     	listarPorId();
+    	fecharFormulario();
+    	$('#campoId').val('');
     });
 
     $('#todosOsProdutos').click(function(){
-    	todosprodutos();
+    	todosProdutos();
+    	fecharFormulario();
     });
 
-	$("#editar").click(function(){
+    $("#formularioInserir").click(function(){
+        limparCampos();
+        $('#editar').hide();
+        $('#incluir').show();
+        abrirFormulario();
+    });
+
+    $("#incluir").click(function(){
+        incluirproduto();
+        fecharFormulario();
+        todosProdutos();
+    });
+
+	$("#formularioEditar").click(function(){
+        pegarId();
+        $('#excluir').hide();
+        $('#editar').hide();
+        $('#editar').show();
         atualizarformulario();
     });
-    $("#submit").click(function(){
-        editarproduto();
+
+    $('#cancelar').click(function(){
+    	limparCampos();
+    	fecharFormulario();
     });
+
+    $("#editar").click(function(){
+        editarProduto();
+    });
+
 	$("#excluir").click(function(){
-        excluirproduto();
-    });
-    $("#abrir").click(function(){
-        abrirformulario();
-    });
-	$("#submit2").click(function(){
-        incluirproduto();
-    });  
+        excluirProduto();
+    }); 
 });
 
-function exibirbotoes(){
-	$('#editar').show();
-	$('#excluir').show();
-}
-
-function esconderbotoes(){
-	$('#editar').hide();
-	$('#excluir').hide();
-}
-
-function listar (){
-	$.getJSON(strings.endereco, function(data){
-		var list='<option value="#"> Selecione uma opção. </option>';
-		for (var x=0; x<data.length;x++){
-			list+='<option value='+data[x].id+'>' + data[x].nome + '</option>';
-		}
-		$('#produtos').html(list);
-	});
-}
-
-function listarPorId(){
-	var id = $('#campoId').val();
-	var num = isNaN(id);
-	if(id!=='' && num===false){
-		buscarproduto(id);
-	}else{
-		mensagemErroId();
-	}
-}
-
-function mensagemErroId(){
-	$('#resultado').html(strings.mensagemErroId);
-}
-
-function buscarproduto(id){
-	var i = id;
-	console.log(i);
-	//var i=$('#produtos').val();
-	//if (i>=0){
-		$.getJSON(strings.endereco + i, function(data){
-			var result='';
-			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
-			result+='<tr><td>' + data.id + '</td>' ;
-			result+='<td>' + data.nome + '</td>' ;
-			result+='<td> R$' + data.valor + '</td>';
-			result+='<td>' + data.status + '</td>';
-			result+='<td>' + data.estoque + '</td></tr></table>';
-			$('#resultado').html(result);
-			exibirbotoes();
-		});
-	/*	
-	}
-
-	else {
-		limpar(i);
-		todosprodutos(i);
-	}
-	*/
-}
-
-function limpar(i){
-	if (i==="#"){
-		$('#resultado').html('');
-		esconderbotoes();
-	}
-}
-
-function todosprodutos (){
+function todosProdutos(){
 	//if (i==="@"){
 		$.getJSON(strings.endereco, function(data){
 			var result='';
@@ -125,16 +79,124 @@ function todosprodutos (){
 	//}
 }
 
-function atualizarformulario (){
-	$('#formulario').toggle();
-	$('#abrir').hide();
-	$("#submit2").hide();
+function listarPorId(){
+	var id = $('#campoId').val();
+	var num = isNaN(id);
+	if(id!=='' && num===false){
+		buscarProduto(id);
+	}else{
+		mensagemErroId();
+	}
 }
 
-function editarproduto (){
-	var i=$('#produtos').val();
+function buscarProduto(id){
+	var i = id;
+	//var i=$('#produtos').val();
+	//if (i>=0){
+		$.getJSON(strings.endereco + i, function(data){
+			var result='';
+			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
+			result+='<tr data-id='+data.id+'><td>' + data.id + '</td>' ;
+			result+='<td>' + data.nome + '</td>' ;
+			result+='<td> R$' + data.valor + '</td>';
+			result+='<td>' + data.status + '</td>';
+			result+='<td>' + data.estoque + '</td></tr></table>';
+			$('#resultado').html(result);
+			exibirBotoes();
+		});
+	/*	
+	}
+
+	else {
+		limpar(i);
+		todosprodutos(i);
+	}
+	*/
+}
+
+function incluirproduto (){
 	$.ajax({
-		url:endereco + i, 
+		url:strings.endereco, 
+		type: 'POST',
+		data: {
+			nome:$('#nome').val(), 
+			valor:$('#valor').val(),
+			status:$('input[name=status]:checked', '#formulario').val(),
+			estoque:$('#estoque').val()
+		}
+	});
+}
+
+function limparCampos(){
+	$('#nome').val('');
+	$('#valor').val('');
+	$('#estoque').val('');
+}
+
+function limpar(){
+	$('#resultado').html('');
+}
+
+function esconderbotoes(){
+	$('#formularioEditar').hide();
+	$('#excluir').hide();
+}
+
+function exibirBotoes(){
+	$('#formularioEditar').show();
+	$('#excluir').show();
+}
+
+function mensagemErroId(){
+	$('#resultado').html(strings.mensagemErroId);
+}
+
+function fecharFormulario(){
+	limpar();
+	$("#formulario").hide();
+}
+
+function abrirFormulario(){
+	limpar();
+	esconderbotoes();
+	$("#formulario").fadeIn('fast');
+	$("#submit").hide();
+}
+
+function atualizarformulario (){
+	$('#formulario').show();
+	$('#abrir').hide();
+	$("#incluir").hide();
+}
+
+function pegarId(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	preencheCampos(id);
+}
+
+function preencheCampos(id){
+	var id = id;
+	$.getJSON(strings.endereco + id, function(data){
+		console.log(data);
+		$('#nome').val(data.nome);
+		$('#valor').val(data.valor);
+		if(data.status==='A'){
+			$('.A').prop('checked', true);
+		}else{
+			$('.I').prop('checked', true);
+		}
+		$('#estoque').val(data.estoque);
+	});
+}
+
+function editarProduto(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	editar(id)
+}
+
+function editar(id){
+	$.ajax({
+		url:strings.endereco+id,
 		type: 'PUT',
 		data: {
 			nome:$('#nome').val(),
@@ -143,30 +205,29 @@ function editarproduto (){
 			estoque:$('#estoque').val()
 		}
 	});
+	fecharFormulario();
+	limparCampos();
+	$("#formularioEditar").hide();
 }
 
-function excluirproduto(){
-	var i=$('#produtos').val();
+function excluirProduto(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	console.log(id);
 	$.ajax({
-		url:endereco + i, 
+		url:strings.endereco+id,
 		type: 'DELETE'
 	});
+	fecharFormulario();
+	$("#formularioEditar").hide();
+	$("#excluir").hide();
 }
 
-function abrirformulario (){
-	$("#formulario").toggle();
-	$("#submit").hide();
-}
-
-function incluirproduto (){
-	$.ajax({
-		url:endereco, 
-		type: 'POST',
-		data: {
-			nome:$('#nome').val(), 
-			valor:$('#valor').val(),
-			status:$('input[name=status]:checked', '#formulario').val(),
-			estoque:$('#estoque').val()
+function listar (){
+	$.getJSON(strings.endereco, function(data){
+		var list='<option value="#"> Selecione uma opção. </option>';
+		for (var x=0; x<data.length;x++){
+			list+='<option value='+data[x].id+'>' + data[x].nome + '</option>';
 		}
+		$('#produtos').html(list);
 	});
 }

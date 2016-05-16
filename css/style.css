@@ -1,16 +1,15 @@
-
-html {margin:0 auto; background:#ccccff; height:100%; width: 100%; background-image: url("../img/background.jpg"); background-size: 20%;}
-body {margin:0 auto; background:#ccccff; height:100%; width: 100%; background-image: url("../img/background.jpg"); background-size: 20%;}
+html, body{margin:0 auto; background:#ccccff; height:100%; width: 100%; background-image: url("../img/background.jpg"); background-size: 20%;}
 
 .barrasuperior {width: 100%; height: auto; padding: 1px; margin: 0 auto; margin-bottom: 3%; text-align: center; background:#000033; box-shadow:0 0 30px #4d4dff; font-size: 150%;}
 .content {width: 800px; height: auto; padding:1% 1% 5% 1%;; margin: 0 auto; text-align: center; background:#000033; box-shadow:0 0 30px #4d4dff; font-size: 120%; border-radius: 15px;}
 
+#formulario, #formularioEditar, #editar, #excluir{display:none;}
+
 #selecao {box-shadow:0 0 15px #4d4dff; width: 580px; margin: 0 auto;}
-#formulario{width: 50%; color: white; font-size: 100%; display: none; margin: 2% auto;}
+#formulario{width: 50%; color: white; font-size: 100%; margin: 2% auto;}
 #botoes {color: white; font-size: 120%; display: inline;}
 #produtos {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6; font-size: 100%; font-weight: bold;}
 #codigo {width: auto; margin: 0 auto; background:#ccccff; border-color: #0000e6; font-size: 90%; font-weight: bold;}
-#editar, #excluir {display: none;}
 
 table {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6; border-top: none;}
 h1{color: #ccccff; text-shadow: 0 0 20px #4d4dff;}

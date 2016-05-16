@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title> CRUD </title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link href="img/icone.png" rel="icon" type="image/png">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> CRUD </title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="js/jquery-1.12.3.js"></script>
 		<script src="js/script.js"></script>
 	</head>
@@ -14,37 +14,35 @@
 			<h1> Atacado de frutas </h1>
 		</div>
 		<div class="content">
-			<h1> Consulte os produtos em estoque:</h1>
+			<h1>Consulte os produtos em estoque:</h1>
 			<!--
 			<div id="selecao">
 				<select id="produtos"></select>
 				
 			</div>
 			-->
-			<form id="botoes">
-				<input id="editar" type="button" value="Editar produto">
-				<input id="excluir" type="submit" formmethod="post" value="Excluir produto">
-				<input id="abrir" type="button" value="Incluir produto">
-				<input id="todosOsProdutos" type="button" value="Listar todos">
-			</form>
 			<div>
 				<input type="text" id="campoId" placeholder="Digite o código do produto..." />
 				<input type="button" id="pesquisarId" value="Pesquisar"/>
 			</div>
-			<br>
-			
-			<form id="formulario">
-  				Produto: <input id="nome" type="text" name="nome" placeholder="ex: morango"><br>
-  				Valor: <input id="valor" type="text" name="valor" placeholder="ex: 2.50"><br>
-  				Estoque: <input id="estoque" type="text" name="estoque" placeholder="200"><br>
+			<div id="botoes">
+				<input id="formularioEditar" type="button" value="Editar produto">
+				<input id="excluir" type="button" value="Excluir produto">
+				<input id="formularioInserir" type="button" value="Incluir produto">
+				<input id="todosOsProdutos" type="button" value="Listar todos">
+			</div>			
+			<div id="formulario">
+  				Produto: <input id="nome" type="text" name="nome" placeholder="ex: morango"/><br>
+  				Valor: <input id="valor" type="text" name="valor" placeholder="ex: 2.50"/><br>
+  				Estoque: <input id="estoque" type="text" name="estoque" placeholder="200"/><br>
   				Status: 
-  				<input type="radio" name="status" value="A" checked> Ativo
-  				<input type="radio" name="status" value="I"> Inativo<br>
-  				<input id="submit" type="submit" formmethod="post" value="Registrar">
-  				<input id="submit2" type="submit" formmethod="post" value="Registrar">
-  				<input type="reset" value="Limpar formulário">
-			</form>
+  				<input type="radio" name="status" value="A" class="A" checked/>Ativo
+  				<input type="radio" name="status" value="I" class="I"/> Inativo<br>
 
+  				<input id="editar" type="button" value="Editar">
+  				<input id="incluir" type="button" value="Incluir">
+  				<input id="cancelar" type="reset" value="Cancelar">
+			</div>
 			<div id="resultado"></div>
 		</div>
 	</body>
