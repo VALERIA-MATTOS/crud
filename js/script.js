@@ -6,7 +6,11 @@
 //
 //
 
-var strings= {endereco:'http://localhost:3000/product/', mensagemErroId:'Não foi possível selecionar o produto.'};
+var strings = {
+	endereco:'http://localhost:3000/product/', 
+	mensagemErroId:'<span class="erro">Não foi possível selecionar o produto.</span>', 
+	mensagemErroPreenchimento:'<span class="erro">Informe corretamente todos os campos.</span>'
+};
 
 $(document).ready(function(){
 	/*listar();
@@ -33,9 +37,7 @@ $(document).ready(function(){
     });
 
     $("#incluir").click(function(){
-        incluirproduto();
-        fecharFormulario();
-        todosProdutos();
+        verificaCampos();
     });
 
 	$("#formularioEditar").click(function(){
@@ -53,11 +55,15 @@ $(document).ready(function(){
 
     $("#editar").click(function(){
         editarProduto();
+        limpar();
     });
 
 	$("#excluir").click(function(){
-        excluirProduto();
-    }); 
+        confirmar();
+    });
+
+    $("#valor").mask("99.99");
+    $("#estoque").mask("99");
 });
 
 function todosProdutos(){
@@ -68,14 +74,14 @@ function todosProdutos(){
 			for (var n=0; n<data.length; n++){
 				result+='<tr><td>' + data[n].id + '</td>' ;
 				result+='<td>' + data[n].nome + '</td>' ;
-				result+='<td> R$' + data[n].valor + '</td>';
+				result+='<td> R$ ' + data[n].valor + '</td>';
 				result+='<td>' + data[n].status + '</td>';
 				result+='<td>' + data[n].estoque + '</td></tr>';
 			}
 			'</table>';
 			$('#resultado').html(result);
 		});
-		esconderbotoes();
+		esconderBotoes();
 	//}
 }
 
@@ -90,19 +96,24 @@ function listarPorId(){
 }
 
 function buscarProduto(id){
-	var i = id;
+	var id = id;
 	//var i=$('#produtos').val();
 	//if (i>=0){
-		$.getJSON(strings.endereco + i, function(data){
+		$.getJSON(strings.endereco + id, function(data){
+			var data = data;
 			var result='';
 			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
 			result+='<tr data-id='+data.id+'><td>' + data.id + '</td>' ;
 			result+='<td>' + data.nome + '</td>' ;
-			result+='<td> R$' + data.valor + '</td>';
+			result+='<td> R$ ' + data.valor + '</td>';
 			result+='<td>' + data.status + '</td>';
 			result+='<td>' + data.estoque + '</td></tr></table>';
 			$('#resultado').html(result);
 			exibirBotoes();
+		})
+		.fail(function(){
+			limpar();
+			mensagemErroId();
 		});
 	/*	
 	}
@@ -114,7 +125,20 @@ function buscarProduto(id){
 	*/
 }
 
-function incluirproduto (){
+function verificaCampos(){
+	var nome = $('#nome').val();
+	var valor = $('#valor').val();
+	var estoque = $('#estoque').val();
+	if(nome===''||valor===''||estoque===''){
+		mensagemErroPreenchimento();
+	}else{
+		incluirproduto();
+		fecharFormulario();
+        todosProdutos();
+	}
+}
+
+function incluirproduto(){
 	$.ajax({
 		url:strings.endereco, 
 		type: 'POST',
@@ -137,7 +161,7 @@ function limpar(){
 	$('#resultado').html('');
 }
 
-function esconderbotoes(){
+function esconderBotoes(){
 	$('#formularioEditar').hide();
 	$('#excluir').hide();
 }
@@ -149,18 +173,22 @@ function exibirBotoes(){
 
 function mensagemErroId(){
 	$('#resultado').html(strings.mensagemErroId);
+	esconderBotoes();
+}
+
+function mensagemErroPreenchimento(){
+	$('#resultado').html(strings.mensagemErroPreenchimento);
 }
 
 function fecharFormulario(){
-	limpar();
+	limparCampos();
 	$("#formulario").hide();
 }
 
 function abrirFormulario(){
 	limpar();
-	esconderbotoes();
+	esconderBotoes();
 	$("#formulario").fadeIn('fast');
-	$("#submit").hide();
 }
 
 function atualizarformulario (){
@@ -210,6 +238,16 @@ function editar(id){
 	$("#formularioEditar").hide();
 }
 
+function confirmar(){
+	var confirma;
+	var press = confirm('Tem certeza que deseja excluir este produto?');
+	if(press===true){
+		excluirProduto();
+		esconderBotoes();
+		limpar();
+	}
+}
+
 function excluirProduto(){
 	var id = $('#resultado').find('tr:nth-child(2)').data('id');
 	console.log(id);
@@ -219,7 +257,6 @@ function excluirProduto(){
 	});
 	fecharFormulario();
 	$("#formularioEditar").hide();
-	$("#excluir").hide();
 }
 
 function listar (){
