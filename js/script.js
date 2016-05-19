@@ -1,32 +1,26 @@
-//Correções:
-//Select não exibe opção para listar tudo;
-//Pesquisa por ID
-//Botão para listar tudo
-//
-//
-//
-
 var strings = {
 	endereco:'http://localhost:3000/product/', 
 	mensagemErroId:'<span class="erro">Não foi possível selecionar o produto.</span>', 
-	mensagemErroPreenchimento:'<span class="erro">Informe corretamente todos os campos.</span>'
+	mensagemErroPreenchimento:'<span class="erro">Informe corretamente todos os campos.</span>',
+	mensagemConfirmarExclusão:'Tem certeza que deseja excluir este produto?',
+	mensagemSucessoEditar:'<span class="erro">Fruta editada com sucesso!</span>',
+	mensagemSucessoExcluir:'<span class="erro">Fruta excluida com sucesso!</span>'
 };
 
 $(document).ready(function(){
-	/*listar();
-	$("#produtos").change(function(){
-        buscarproduto();
-    });*/
+	$('#filtroStatus').hide();
 
     $('#pesquisarId').click(function(){
     	listarPorId();
     	fecharFormulario();
     	$('#campoId').val('');
+    	$('#filtroStatus').hide();
     });
 
     $('#todosOsProdutos').click(function(){
     	todosProdutos();
     	fecharFormulario();
+    	$('#filtroStatus').show();
     });
 
     $("#formularioInserir").click(function(){
@@ -34,10 +28,12 @@ $(document).ready(function(){
         $('#editar').hide();
         $('#incluir').show();
         abrirFormulario();
+        $('#filtroStatus').hide();
     });
 
     $("#incluir").click(function(){
         verificaCampos();
+        $('#filtroStatus').hide();
     });
 
 	$("#formularioEditar").click(function(){
@@ -46,6 +42,7 @@ $(document).ready(function(){
         $('#editar').hide();
         $('#editar').show();
         atualizarformulario();
+        $('#filtroStatus').hide();
     });
 
     $('#cancelar').click(function(){
@@ -55,36 +52,49 @@ $(document).ready(function(){
 
     $("#editar").click(function(){
         editarProduto();
-        limpar();
     });
 
 	$("#excluir").click(function(){
         confirmar();
     });
 
-    $("#valor").mask("99.99");
-    $("#estoque").mask("99");
+	$('#filtroStatus').change(function(){
+        var indice = this.value;
+        filtro(indice);
+	});
+
+    $("#valor").maskMoney({decimal: '.'});
+    $("#estoque").maskMoney({decimal: '.', precision: 1, thousands: ''});
 });
 
+//faz que com o pressionamento da tecla enter, seja realizada a pesquisa
+$(document).keypress(function(e) {
+	if (e.which == 13) {
+		listarPorId();
+    	fecharFormulario();
+    	$('#campoId').val('');
+	}
+});
+
+//faz a requisição de todos os produtos
 function todosProdutos(){
-	//if (i==="@"){
-		$.getJSON(strings.endereco, function(data){
-			var result='';
-			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
-			for (var n=0; n<data.length; n++){
-				result+='<tr><td>' + data[n].id + '</td>' ;
-				result+='<td>' + data[n].nome + '</td>' ;
-				result+='<td> R$ ' + data[n].valor + '</td>';
-				result+='<td>' + data[n].status + '</td>';
-				result+='<td>' + data[n].estoque + '</td></tr>';
-			}
-			'</table>';
-			$('#resultado').html(result);
-		});
-		esconderBotoes();
-	//}
+	$.getJSON(strings.endereco, function(data){
+		var result='';
+		result+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
+		for (var n=0; n<data.length; n++){
+			result+='<tr><td>' + data[n].id + '</td>' ;
+			result+='<td>' + data[n].nome + '</td>' ;
+			result+='<td> R$ ' + data[n].valor + '</td>';
+			result+='<td>' + data[n].status + '</td>';
+			result+='<td>' + data[n].estoque + '</td></tr>';
+		}
+		'</table>';
+		$('#resultado').html(result);
+	});
+	esconderBotoes();
 }
 
+//isNaN testa se o que foi digitado não é um número
 function listarPorId(){
 	var id = $('#campoId').val();
 	var num = isNaN(id);
@@ -95,55 +105,36 @@ function listarPorId(){
 	}
 }
 
+//faz a requisição de um produto (de acordo com a id digitada)
 function buscarProduto(id){
 	var id = id;
-	//var i=$('#produtos').val();
-	//if (i>=0){
-		$.getJSON(strings.endereco + id, function(data){
-			var data = data;
-			var result='';
-			result+='<table border="1"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
-			result+='<tr data-id='+data.id+'><td>' + data.id + '</td>' ;
-			result+='<td>' + data.nome + '</td>' ;
-			result+='<td> R$ ' + data.valor + '</td>';
-			result+='<td>' + data.status + '</td>';
-			result+='<td>' + data.estoque + '</td></tr></table>';
-			$('#resultado').html(result);
-			exibirBotoes();
-		})
-		.fail(function(){
-			limpar();
-			mensagemErroId();
-		});
-	/*	
-	}
-
-	else {
-		limpar(i);
-		todosprodutos(i);
-	}
-	*/
+	$.getJSON(strings.endereco + id, function(data){
+		var data = data;
+		var result='';
+		result+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';
+		result+='<tr data-id='+data.id+'><td>' + data.id + '</td>' ;
+		result+='<td>' + data.nome + '</td>' ;
+		result+='<td> R$ ' + data.valor + '</td>';
+		result+='<td>' + data.status + '</td>';
+		result+='<td>' + data.estoque + '</td></tr></table>';
+		$('#resultado').html(result);
+		exibirBotoes();
+	})
+	.fail(function(){
+		limpar();
+		mensagemErroId();
+	});
 }
 
-function verificaCampos(){
-	var nome = $('#nome').val();
-	var valor = $('#valor').val();
-	var estoque = $('#estoque').val();
-	if(nome===''||valor===''||estoque===''){
-		mensagemErroPreenchimento();
-	}else{
-		incluirproduto();
-		fecharFormulario();
-        todosProdutos();
-	}
-}
-
-function incluirproduto(){
+//função ajax serve para fazer as requisições PUT, POST e DELETE
+function ajax (link,tipo){
+	var nome = $('#nome').val(),
+	nome = nome.toLowerCase();
 	$.ajax({
-		url:strings.endereco, 
-		type: 'POST',
+		url:link,
+		type: tipo,
 		data: {
-			nome:$('#nome').val(), 
+			nome:nome,
 			valor:$('#valor').val(),
 			status:$('input[name=status]:checked', '#formulario').val(),
 			estoque:$('#estoque').val()
@@ -151,16 +142,142 @@ function incluirproduto(){
 	});
 }
 
+//POST, serve para adicionar um produto
+function incluirProduto(){
+	ajax(strings.endereco,'POST');
+}
+
+function editarProduto(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	editar(id);
+}
+
+//PUT, serve para editar um produto
+function editar(id){
+	ajax(strings.endereco+id,'PUT')
+	fecharFormulario();
+	limparCampos();
+	$("#formularioEditar").hide();
+	$('#resultado').html(strings.mensagemSucessoEditar);
+}
+
+//DELETE, serve para excluir um produto
+function excluirProduto(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	ajax(strings.endereco+id,'DELETE');
+	fecharFormulario();
+	$("#formularioEditar").hide();
+}
+
+
+//verifica se todos os campos do formulário foram preenchidos
+function verificaCampos(){
+	var nome = $('#nome').val();
+	var valor = $('#valor').val();
+	var estoque = $('#estoque').val();
+	if(nome===''||valor===''||estoque===''){
+		$('#resultado').html(strings.mensagemErroPreenchimento);
+	}
+	else{
+		incluirProduto();
+		fecharFormulario();
+        todosProdutos();
+	}
+}
+
+//limpa os campos do formulário
 function limparCampos(){
 	$('#nome').val('');
 	$('#valor').val('');
 	$('#estoque').val('');
 }
 
+//salva a ID digitada antes de limpar a linha
+function pegarId(){
+	var id = $('#resultado').find('tr:nth-child(2)').data('id');
+	preencheCampos(id);
+}
+
+//preenche os campos do formulário "editar" de acordo com os dados antigos da ID selecionada
+function preencheCampos(id){
+	var id = id;
+	$.getJSON(strings.endereco + id, function(data){
+		$('#nome').val(data.nome);
+		$('#valor').val(data.valor);
+		if(data.status==='A'){
+			$('.A').prop('checked', true);
+		}else{
+			$('.I').prop('checked', true);
+		}
+		$('#estoque').val(data.estoque);
+	});
+}
+
+//limpa a div onde são mostradas os resultados
 function limpar(){
 	$('#resultado').html('');
 }
 
+//mensagem alertando sobre a exclusão de um produto
+function confirmar(){
+	var press = confirm(strings.mensagemConfirmarExclusão);
+	if(press === true){
+		excluirProduto();
+		esconderBotoes();
+		limpar();
+		$('#resultado').html(strings.mensagemSucessoExcluir);
+	}
+}
+
+//verifica qual opção do filtro está selecionada
+function filtro(indice){
+	var selecionado = indice;
+	console.log(selecionado);
+	if (selecionado === "todos"){
+		limpar();
+		todosProdutos();
+	}
+	else if(selecionado === "ativos"){
+		limpar();
+		testaStatus(true);
+	}
+	else if(selecionado === "inativos"){
+		limpar();
+		testaStatus(false);
+	}
+}
+
+//verifica se o status é "Ativo" ou "Inativo"
+function testaStatus(status){
+	$.getJSON(strings.endereco, function(result){
+		var arrOut = '';
+		if (status === true){
+	        arrOut += ativoOuInativo('ativos', result);
+	    }
+	    else{
+	        arrOut += ativoOuInativo('inativos', result);
+	    } 
+	});
+}
+
+/*
+function ativoOuInativo(status,result){
+	var arrOut='';
+		arrOut+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
+		for (var n=0; n<result.length; n++){
+			if (result[n].status===status){
+				var status = result[n].status;
+				arrOut+='<tr><td>' + data[n].id + '</td>' ;
+				arrOut+='<td>' + data[n].nome + '</td>' ;
+				arrOut+='<td> R$ ' + data[n].valor + '</td>';
+				arrOut+='<td>' + data[n].status + '</td>';
+				arrOut+='<td>' + data[n].estoque + '</td></tr>';
+			}
+		}
+}
+*/
+
+//sequência de funções para ocultar/mostrar botões
 function esconderBotoes(){
 	$('#formularioEditar').hide();
 	$('#excluir').hide();
@@ -174,10 +291,6 @@ function exibirBotoes(){
 function mensagemErroId(){
 	$('#resultado').html(strings.mensagemErroId);
 	esconderBotoes();
-}
-
-function mensagemErroPreenchimento(){
-	$('#resultado').html(strings.mensagemErroPreenchimento);
 }
 
 function fecharFormulario(){
@@ -195,76 +308,4 @@ function atualizarformulario (){
 	$('#formulario').show();
 	$('#abrir').hide();
 	$("#incluir").hide();
-}
-
-function pegarId(){
-	var id = $('#resultado').find('tr:nth-child(2)').data('id');
-	preencheCampos(id);
-}
-
-function preencheCampos(id){
-	var id = id;
-	$.getJSON(strings.endereco + id, function(data){
-		console.log(data);
-		$('#nome').val(data.nome);
-		$('#valor').val(data.valor);
-		if(data.status==='A'){
-			$('.A').prop('checked', true);
-		}else{
-			$('.I').prop('checked', true);
-		}
-		$('#estoque').val(data.estoque);
-	});
-}
-
-function editarProduto(){
-	var id = $('#resultado').find('tr:nth-child(2)').data('id');
-	editar(id)
-}
-
-function editar(id){
-	$.ajax({
-		url:strings.endereco+id,
-		type: 'PUT',
-		data: {
-			nome:$('#nome').val(),
-			valor:$('#valor').val(),
-			status:$('input[name=status]:checked', '#formulario').val(),
-			estoque:$('#estoque').val()
-		}
-	});
-	fecharFormulario();
-	limparCampos();
-	$("#formularioEditar").hide();
-}
-
-function confirmar(){
-	var confirma;
-	var press = confirm('Tem certeza que deseja excluir este produto?');
-	if(press===true){
-		excluirProduto();
-		esconderBotoes();
-		limpar();
-	}
-}
-
-function excluirProduto(){
-	var id = $('#resultado').find('tr:nth-child(2)').data('id');
-	console.log(id);
-	$.ajax({
-		url:strings.endereco+id,
-		type: 'DELETE'
-	});
-	fecharFormulario();
-	$("#formularioEditar").hide();
-}
-
-function listar (){
-	$.getJSON(strings.endereco, function(data){
-		var list='<option value="#"> Selecione uma opção. </option>';
-		for (var x=0; x<data.length;x++){
-			list+='<option value='+data[x].id+'>' + data[x].nome + '</option>';
-		}
-		$('#produtos').html(list);
-	});
 }

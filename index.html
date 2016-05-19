@@ -7,7 +7,7 @@
 		<title> CRUD </title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="js/jquery-1.12.3.js"></script>
-		<script src="js/maskedinput.js"></script>
+		<script src="js/maskMoney.js"></script>
 		<script src="js/script.js"></script>
 	</head>
 	<body>
@@ -16,12 +16,6 @@
 		</div>
 		<div class="content">
 			<h1>Consulte os produtos em estoque:</h1>
-			<!--
-			<div id="selecao">
-				<select id="produtos"></select>
-				
-			</div>
-			-->
 			<div>
 				<input type="text" id="campoId" placeholder="Digite o código do produto..." />
 				<input type="button" id="pesquisarId" value="Pesquisar"/>
@@ -32,6 +26,13 @@
 				<input id="formularioInserir" type="button" value="Incluir produto">
 				<input id="todosOsProdutos" type="button" value="Listar todos">
 			</div>			
+			<div>
+				<select id="filtroStatus">
+					<option value="todos">Todos</option>
+					<option value="ativos">Ativos</option>
+					<option value="inativos">Inativos</option>
+				</select>
+			</div>
 			<div id="formulario">
   				Produto: <input id="nome" type="text" name="nome" placeholder="ex: morango"/><br>
   				Valor: R$ <input id="valor" type="text" name="valor" placeholder="ex: 2.50"/><br>
