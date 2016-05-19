@@ -5,11 +5,10 @@ html, body{margin:0 auto; background:#ccccff; height:100%; width: 100%; backgrou
 
 #formulario, #formularioEditar, #editar, #excluir{display:none;}
 
-#selecao {box-shadow:0 0 15px #4d4dff; width: 580px; margin: 0 auto;}
 #formulario{width: 50%; color: white; font-size: 100%; margin: 2% auto;}
 #botoes {color: white; font-size: 120%; display: inline;}
-#produtos {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6; font-size: 100%; font-weight: bold;}
-#codigo {width: auto; margin: 0 auto; background:#ccccff; border-color: #0000e6; font-size: 90%; font-weight: bold;}
+#filtroStatus{float:left;font-size: 100%; border-color: #0000e6; background:#ccccff;}
+#pesquisa{color: white; font-size: 120%;}
 
 table {width: 100%; margin: 0 auto; background:#ccccff; border-color: #0000e6;}
 h1{color: #ccccff; text-shadow: 0 0 20px #4d4dff;}
