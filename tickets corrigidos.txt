@@ -18,7 +18,7 @@
 
 6- #2 Deixar campos do formulário editar previamente preenchidos l.203
 
-7- #9 Solicitar a confirmação quando for excluir. l.224
+7- #9 Solicitar a confirmação quando for excluir. l.226
 
 8- #3 Incluir pesquisa através da id, ativos e inativos l.99/110
-							l.234
+							l.237
