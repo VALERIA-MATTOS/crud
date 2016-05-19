@@ -18,6 +18,7 @@ $(document).ready(function(){
     });
 
     $('#todosOsProdutos').click(function(){
+    	$('#filtroStatus').val('todos');
     	todosProdutos();
     	fecharFormulario();
     	$('#filtroStatus').show();
@@ -56,6 +57,7 @@ $(document).ready(function(){
 
 	$("#excluir").click(function(){
         confirmar();
+        $('#filtroStatus').hide();
     });
 
 	$('#filtroStatus').change(function(){
@@ -252,30 +254,30 @@ function testaStatus(status){
 	$.getJSON(strings.endereco, function(result){
 		var arrOut = '';
 		if (status === true){
-	        arrOut += ativoOuInativo('ativos', result);
+	        arrOut += ativoOuInativo('A', result);
 	    }
 	    else{
-	        arrOut += ativoOuInativo('inativos', result);
+	        arrOut += ativoOuInativo('I', result);
 	    } 
+	   	 $('#resultado').append(arrOut);
 	});
 }
 
-/*
+//escreve os produtos
 function ativoOuInativo(status,result){
 	var arrOut='';
-		arrOut+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
-		for (var n=0; n<result.length; n++){
-			if (result[n].status===status){
-				var status = result[n].status;
-				arrOut+='<tr><td>' + data[n].id + '</td>' ;
-				arrOut+='<td>' + data[n].nome + '</td>' ;
-				arrOut+='<td> R$ ' + data[n].valor + '</td>';
-				arrOut+='<td>' + data[n].status + '</td>';
-				arrOut+='<td>' + data[n].estoque + '</td></tr>';
-			}
+	arrOut+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
+	for (var n=0; n<result.length; n++){
+		if (result[n].status===status){
+			arrOut+='<tr><td>' + result[n].id + '</td>' ;
+			arrOut+='<td>' + result[n].nome + '</td>' ;
+			arrOut+='<td> R$ ' + result[n].valor + '</td>';
+			arrOut+='<td>' + result[n].status + '</td>';
+			arrOut+='<td>' + result[n].estoque + '</td></tr>';
 		}
+	}
+	return arrOut;
 }
-*/
 
 //sequência de funções para ocultar/mostrar botões
 function esconderBotoes(){
