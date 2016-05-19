@@ -1,0 +1,24 @@
+1- #1 validação do formulário:
+	l.131	Deixar todas letras minúsculas; 
+	l.65/66	Valores e estoque com letras;
+	l.65/66	Números negativos;
+	l.65/66	Mais de um ponto no valor;
+	l.65/66	Várias casas decimais depois do ponto.
+
+2- #2 Deixar campos do formulário editar previamente preenchidos l.200
+
+3- #6 função      l.129 
+	PUT    l.156
+	POST   l.146
+	DELETE l.166
+
+4- #7 colocar algum botão para listar todos os produtos l.19
+
+5- #8 Centralizar as mensagens de avisos e incluir elas nas funções l.1
+
+6- #9 Solicitar a confirmação quando for excluir. l.220
+
+7- #12 Ao apertar a tecla enter, fazer a pesquisa do ID digitado l.70
+
+8- #3 Incluir pesquisa através da id, ativos e inativos l.96/108
+							l.230

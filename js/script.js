@@ -3,11 +3,13 @@ var strings = {
 	mensagemErroId:'<span class="erro">Não foi possível selecionar o produto.</span>', 
 	mensagemErroPreenchimento:'<span class="erro">Informe corretamente todos os campos.</span>',
 	mensagemConfirmarExclusão:'Tem certeza que deseja excluir este produto?',
-	mensagemSucessoEditar:'<span class="erro">Fruta editada com sucesso!</span>'
+	mensagemSucessoEditar:'<span class="erro">Fruta editada com sucesso!</span>',
+	mensagemSucessoExcluir:'<span class="erro">Fruta excluida com sucesso!</span>'
 };
 
 $(document).ready(function(){
-	$('#filtroStatus').hide();	
+	$('#filtroStatus').hide();
+
     $('#pesquisarId').click(function(){
     	listarPorId();
     	fecharFormulario();
@@ -65,6 +67,7 @@ $(document).ready(function(){
     $("#estoque").maskMoney({decimal: '.', precision: 1, thousands: ''});
 });
 
+//faz que com o pressionamento da tecla enter, seja realizada a pesquisa
 $(document).keypress(function(e) {
 	if (e.which == 13) {
 		listarPorId();
@@ -73,6 +76,7 @@ $(document).keypress(function(e) {
 	}
 });
 
+//faz a requisição de todos os produtos
 function todosProdutos(){
 	$.getJSON(strings.endereco, function(data){
 		var result='';
@@ -90,6 +94,7 @@ function todosProdutos(){
 	esconderBotoes();
 }
 
+//isNaN testa se o que foi digitado não é um número
 function listarPorId(){
 	var id = $('#campoId').val();
 	var num = isNaN(id);
@@ -100,6 +105,7 @@ function listarPorId(){
 	}
 }
 
+//faz a requisição de um produto (de acordo com a id digitada)
 function buscarProduto(id){
 	var id = id;
 	$.getJSON(strings.endereco + id, function(data){
@@ -120,6 +126,7 @@ function buscarProduto(id){
 	});
 }
 
+//função ajax serve para fazer as requisições PUT, POST e DELETE
 function ajax (link,tipo){
 	var nome = $('#nome').val(),
 	nome = nome.toLowerCase();
@@ -135,6 +142,7 @@ function ajax (link,tipo){
 	});
 }
 
+//POST, serve para adicionar um produto
 function incluirProduto(){
 	ajax(strings.endereco,'POST');
 }
@@ -144,6 +152,7 @@ function editarProduto(){
 	editar(id);
 }
 
+//PUT, serve para editar um produto
 function editar(id){
 	ajax(strings.endereco+id,'PUT')
 	fecharFormulario();
@@ -152,6 +161,7 @@ function editar(id){
 	$('#resultado').html(strings.mensagemSucessoEditar);
 }
 
+//DELETE, serve para excluir um produto
 function excluirProduto(){
 	var id = $('#resultado').find('tr:nth-child(2)').data('id');
 	ajax(strings.endereco+id,'DELETE');
@@ -159,6 +169,8 @@ function excluirProduto(){
 	$("#formularioEditar").hide();
 }
 
+
+//verifica se todos os campos do formulário foram preenchidos
 function verificaCampos(){
 	var nome = $('#nome').val();
 	var valor = $('#valor').val();
@@ -173,17 +185,20 @@ function verificaCampos(){
 	}
 }
 
+//limpa os campos do formulário
 function limparCampos(){
 	$('#nome').val('');
 	$('#valor').val('');
 	$('#estoque').val('');
 }
 
+//salva a ID digitada antes de limpar a linha
 function pegarId(){
 	var id = $('#resultado').find('tr:nth-child(2)').data('id');
 	preencheCampos(id);
 }
 
+//preenche os campos do formulário "editar" de acordo com os dados antigos da ID selecionada
 function preencheCampos(id){
 	var id = id;
 	$.getJSON(strings.endereco + id, function(data){
@@ -198,19 +213,23 @@ function preencheCampos(id){
 	});
 }
 
+//limpa a div onde são mostradas os resultados
 function limpar(){
 	$('#resultado').html('');
 }
 
+//mensagem alertando sobre a exclusão de um produto
 function confirmar(){
 	var press = confirm(strings.mensagemConfirmarExclusão);
 	if(press === true){
 		excluirProduto();
 		esconderBotoes();
 		limpar();
+		$('#resultado').html(strings.mensagemSucessoExcluir);
 	}
 }
 
+//verifica qual opção do filtro está selecionada
 function filtro(indice){
 	var selecionado = indice;
 	console.log(selecionado);
@@ -228,6 +247,7 @@ function filtro(indice){
 	}
 }
 
+//verifica se o status é "Ativo" ou "Inativo"
 function testaStatus(status){
 	$.getJSON(strings.endereco, function(result){
 		var arrOut = '';
@@ -240,6 +260,7 @@ function testaStatus(status){
 	});
 }
 
+/*
 function ativoOuInativo(status,result){
 	var arrOut='';
 		arrOut+='<table border="2"><tr><th>Código</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr><tr>';
@@ -254,7 +275,9 @@ function ativoOuInativo(status,result){
 			}
 		}
 }
+*/
 
+//sequência de funções para ocultar/mostrar botões
 function esconderBotoes(){
 	$('#formularioEditar').hide();
 	$('#excluir').hide();
