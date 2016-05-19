@@ -102,8 +102,10 @@ function listarPorId(){
 	var num = isNaN(id);
 	if(id!=='' && num===false){
 		buscarProduto(id);
+		$('#filtroStatus').hide();
 	}else{
 		mensagemErroId();
+		$('#filtroStatus').hide();
 	}
 }
 
